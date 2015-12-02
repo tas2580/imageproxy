@@ -1,0 +1,31 @@
+{
+	"name": "tas2580/imageproxy",
+	"type": "phpbb-extension",
+	"description": "Displays every image as a link, which is included with [img] bbcode and not hosted with the own board.",
+	"homepage": "https://tas2580.net/downloads/phpbb-social-media-buttons/",
+	"version": "1.0.0",
+	"time": "2015-04-29",
+	"license": "GPL-2.0",
+	"authors": [
+		{
+			"name": "tas2580",
+			"homepage": "https://tas2580.net",
+			"email": "mail@tas2580.net",
+			"role": "Developer"
+		}
+	],
+	"require": {
+		"php": ">=5.3.3"
+	},
+	"extra": {
+		"display-name": "Image Proxy",
+		"soft-require": {
+			"phpbb/phpbb": ">=3.1.3"
+		},
+		"version-check": {
+			"host": "phpbb-versionscheck.cf",
+			"directory": "/tas2580/imageproxy/master",
+			"filename": "version-check.json"
+		}
+	}
+}

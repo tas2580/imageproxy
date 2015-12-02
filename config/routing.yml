@@ -1,0 +1,3 @@
+tas2580_imageproxy_main:
+    pattern: /imageproxy/
+    defaults: { _controller: tas2580.imageproxy.main:image }

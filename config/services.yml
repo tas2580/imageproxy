@@ -1,0 +1,14 @@
+services:
+    tas2580.imageproxy.main:
+        class: tas2580\imageproxy\controller\main
+        arguments:
+            - @cache.driver
+            - @request
+    tas2580.imageproxy.listener:
+        class: tas2580\imageproxy\event\listener
+        arguments:
+            - @controller.helper
+            - @user
+            - @template
+        tags:
+            - { name: event.listener }
