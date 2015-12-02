@@ -38,7 +38,7 @@ class main
 		if ($data === false)
 		{
 			$headers = @get_headers($img, true);
-			if($headers[0] != 'HTTP/1.1 200 OK')
+			if ($headers[0] != 'HTTP/1.1 200 OK')
 			{
 				// 1x1px transparent png
 				$data = array(
