@@ -2,7 +2,7 @@
 /**
 *
 * @package phpBB Extension - Image Proxy
-* @copyright (c) 2015 tas2580 (https://tas2580.net)
+* @copyright (c) 2016 tas2580 (https://tas2580.net)
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
 */
@@ -13,14 +13,16 @@ class main
 {
 	/** @var \phpbb\cache\driver\driver_interface */
 	protected $cache;
+
 	/** @var \phpbb\request\request */
 	protected $request;
 
 	/**
-	* Constructor
-	*
-	* @param \phpbb\request\request		$request				Request object
-	*/
+	 * Constructor
+	 *
+	 * @param \phpbb\cache\driver\driver_interface	$cache
+	 * @param \phpbb\request\request				$request				Request object
+	 */
 	public function __construct(\phpbb\cache\driver\driver_interface $cache, \phpbb\request\request $request)
 	{
 		$this->cache = $cache;

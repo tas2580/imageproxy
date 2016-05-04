@@ -2,7 +2,7 @@
 /**
 *
 * @package phpBB Extension - Image Proxy
-* @copyright (c) 2015 tas2580 (https://tas2580.net)
+* @copyright (c) 2016 tas2580 (https://tas2580.net)
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
 */
@@ -21,22 +21,25 @@ class listener implements EventSubscriberInterface
 {
 	/** @var \phpbb\controller\helper */
 	protected $helper;
+
 	/** @var \phpbb\template\template */
 	protected $template;
+
 	/** @var \phpbb\user */
 	protected $user;
 
 	/**
-	* Constructor
-	*
-	* @param \phpbb\user $user, \phpbb\template\template $template
-	*/
+	 * Constructor
+	 *
+	 * @param \phpbb\controller\helper		$helper
+	 * @param \phpbb\user				$user
+	 * @param \phpbb\template\template	$template
+	 */
 	public function __construct(\phpbb\controller\helper $helper, \phpbb\user $user, \phpbb\template\template $template)
 	{
 		$this->helper = $helper;
 		$this->user = $user;
 		$this->template = $template;
-
 	}
 
 	/**
@@ -52,7 +55,6 @@ class listener implements EventSubscriberInterface
 			'core.bbcode_cache_init_end'	=> 'bbcode_cache_init_end',
 		);
 	}
-
 
 	/**
 	 * Changes the regex replacement for second pass
