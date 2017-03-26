@@ -37,18 +37,12 @@ class main
 		$img = $this->request->variable('img', '', true);
 		$cache_file = '_imageproxy_' . $img;
 		$data = $this->cache->get($cache_file);
+
 		if ($data === false)
 		{
 			$headers = @get_headers($img, true);
-			if ($headers[0] != 'HTTP/1.1 200 OK')
-			{
-				// 1x1px transparent png
-				$data = array(
-					'header'	=> 'image/png',
-					'content'	=> 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAABnRSTlMAAAAAAABupgeRAAAADElEQVQImWNgYGAAAAAEAAGjChXjAAAAAElFTkSuQmCC',
-				);
-			}
-			else
+
+			if (substr_count($headers[0], '200 OK') && substr_count($headers['Content-Type'], 'image/'))
 			{
 				// Create a HTTP header with user agent
 				$options = array(
@@ -61,8 +55,16 @@ class main
 
 				// Get the remote image
 				$data = array(
-					'header'	=>$headers['Content-Type'],
+					'header'	=> $headers['Content-Type'],
 					'content'	=> base64_encode(file_get_contents($img, false, $context)),
+				);
+			}
+			else
+			{
+				// 1x1px transparent png
+				$data = array(
+					'header'	=> 'image/png',
+					'content'	=> 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAABnRSTlMAAAAAAABupgeRAAAADElEQVQImWNgYGAAAAAEAAGjChXjAAAAAElFTkSuQmCC',
 				);
 			}
 			// Cache for 1 day
