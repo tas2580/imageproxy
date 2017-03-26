@@ -43,29 +43,48 @@ class listener implements EventSubscriberInterface
 	}
 
 	/**
-	* Assign functions defined in this class to event listeners in the core
-	*
-	* @return array
-	* @static
-	* @access public
-	*/
+	 * Assign functions defined in this class to event listeners in the core
+	 *
+	 * @return array
+	 * @static
+	 * @access public
+	 */
 	static public function getSubscribedEvents()
 	{
 		return array(
-			'core.bbcode_cache_init_end'	=> 'bbcode_cache_init_end',
+			'core.bbcode_cache_init_end'		=> 'modify_case_img',
+			// phpBB 3.2
+			'core.text_formatter_s9e_configure_after'	=> 'configure_textformatter',
 		);
+	}
+
+	/**
+	 * Configures the textformatter
+	 *
+	 * @param \phpbb\event\data $event
+	 * @return null
+	 * @access public
+	 */
+	public function configure_textformatter($event)
+	{
+		/** @var \s9e\TextFormatter\Configurator $configurator */
+		$configurator = $event['configurator'];
+
+		$bbcode_monkey = new \s9e\TextFormatter\Plugins\BBCodes\Configurator\BBCodeMonkey($configurator);
+
+		// Unfortunately, this has to be hardcoded
+		$parsed_img = $bbcode_monkey->create('[IMG src={IMAGEURL;useContent}]', '<img src="' . $this->helper->route('tas2580_imageproxy_main', array()) . '?img={IMAGEURL}" class="postimage" alt="{L_IMAGE}"/>');
+		$configurator->tags['IMG'] = $parsed_img['tag'];
 	}
 
 	/**
 	 * Changes the regex replacement for second pass
 	 *
-	 * Based on phpBB.de - External Image as Link from Christian Schnegelberger<blackhawk87@phpbb.de> and Oliver Schramm <elsensee@phpbb.de>
-	 *
-	 * @param object $event
+	 * @param \phpbb\event\data $event
 	 * @return null
 	 * @access public
 	 */
-	public function bbcode_cache_init_end($event)
+	public function modify_case_img($event)
 	{
 		$bbcode_id = 4; // [img] has bbcode_id 4 hardcoded
 		$bbcode_cache = $event['bbcode_cache'];
